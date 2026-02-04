@@ -41,31 +41,26 @@ void q15_axpy_rvv(const int16_t *a, const int16_t *b,
 #else
 size_t vl;
     for (; n > 0; n -= vl) {
-        // e16m4 allows the 32-bit intermediate registers to use LMUL=8,
-        // which is the maximum supported grouping for highest throughput.
+        //  maximum supported grouping for highest throughput.
         vl = __riscv_vsetvl_e16m4(n);
 
-        // Load 16-bit input vectors
+        // loading input vectors
         vint16m4_t va = __riscv_vle16_v_i16m4(a, vl);
         vint16m4_t vb = __riscv_vle16_v_i16m4(b, vl);
 
-        // 1. Widening Convert: Promote 'a' to 32-bit (m8) to prevent 
+        // changingig a to 32-bit for accumulation
         // intermediate overflow during the accumulation step.
         vint32m8_t v_acc = __riscv_vwcvt_x_x_v_i32m8(va, vl);
 
-        // 2. Fused Widening Multiply-Accumulate: v_acc = (alpha * vb) + v_acc
-        // This performs the 16-bit multiplication and 32-bit addition in one 
-        // instruction, staying in 32-bit precision as per the scalar ref.
+        // using the fused multacc intrinsc 
         v_acc = __riscv_vwmacc_vx_i32m8(v_acc, alpha, vb, vl);
 
-        // 3. Narrow and Saturate:
-        // vnclip handles the saturation to the signed 16-bit range.
-        // Shift 0 is used to match the integer-based 'sat_q15_scalar'.
+        // narrowing the result back to 16-bit with saturation
         vint16m4_t v_res = __riscv_vnclip_wx_i16m4(v_acc, 0, __RISCV_VXRM_RNU, vl);
 
-        // Store result and update pointers
+        // storing the result
         __riscv_vse16_v_i16m4(y, v_res, vl);
-
+        //increasing the pointers
         a += vl;
         b += vl;
         y += vl;
