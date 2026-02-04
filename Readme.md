@@ -88,6 +88,13 @@ qemu-riscv64 ./q15_axpy 4096
 Cycles ref: 300000 ( on avg for N = 4096)
 Cycles RVV: 250000
 Speedup: ~(1.2 -1.5)x
+
+<p align="center">
+  <img src="results/pairwise_comparison.png" alt="comparsion with scalar" width="700"/>
+</p>
+
+<!-- ![Performance Comparison](results/pairwise_comparison.png)
+![Speedup vs Size](results/scaling_results.png) -->
 ```
 
 ### Analysis Scripts
