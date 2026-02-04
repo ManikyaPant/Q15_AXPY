@@ -1,0 +1,11 @@
+#files
+*.o
+*.out
+*.elf
+app2.c
+
+
+#folders
+/qemu
+/riscv-gnu-toolchain
+/dsp
