@@ -29,7 +29,8 @@ Q15_AXPY/
 ├── compile.bash        # Build script
 ├── run.bash           # Execution script
 ├── script.py          # Performance analysis/plotting
-├── results/           # Performance data and graphs
+├── results/            # Performance data and graphs
+├── report.pdf/        #provindig the mathematical calculations and the rationale behind the implementation choices 
 ├── .vscode/           # VSCode configuration
 └── README.md
 ```
@@ -89,13 +90,16 @@ Cycles ref: 300000 ( on avg for N = 4096)
 Cycles RVV: 250000
 Speedup: ~(1.2 -1.5)x
 
+```
 <p align="center">
   <img src="results/pairwise_comparison.png" alt="comparsion with scalar" width="700"/>
+</p>
+<p align="center">
+  <img src="results/scaling_results.png" alt="scaling results" width="700"/>
 </p>
 
 <!-- ![Performance Comparison](results/pairwise_comparison.png)
 ![Speedup vs Size](results/scaling_results.png) -->
-```
 
 ### Analysis Scripts
 
